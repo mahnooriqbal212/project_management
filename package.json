@@ -1,0 +1,21 @@
+{
+  "name": "projmanagement",
+  "version": "1.0.0",
+  "description": "a project management application for beginners",
+  "main": "index.js",
+  "scripts": {
+    "dev": "node index.js"
+  },
+  "keywords": [
+    "my",
+    "learning",
+    "backend",
+    "api",
+    "creation"
+  ],
+  "author": "mahnoor iqbal",
+  "license": "ISC",
+  "devDependencies": {
+    "prettier": "3.7.1"
+  }
+}
