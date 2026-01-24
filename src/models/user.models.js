@@ -76,7 +76,7 @@ userSchema.methods.isPasswordCorrect = async function (password) {
   return await bcrypt.compare(password, this.password);
 };
 
-// creating access token
+// access token
 userSchema.methods.generateAccessToken = function () {
   // header.payload.signature
   return jwt.sign(
@@ -90,6 +90,7 @@ userSchema.methods.generateAccessToken = function () {
   );
 };
 
+// refresh token
 userSchema.methods.generateRefreshToken = function () {
   return jwt.sign(
     {
@@ -100,6 +101,7 @@ userSchema.methods.generateRefreshToken = function () {
   );
 };
 
+// general token
 userSchema.methods.generateTemporaryToken = function () {
   const unHashedToken = crypto.randomlyBytes(20).toString("hex");
   const hashedToken = crypto
