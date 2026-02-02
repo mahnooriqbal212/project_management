@@ -1,6 +1,7 @@
 import mongoose, { Schema } from "mongoose";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
+import crypto from "crypto";
 
 const userSchema = new Schema(
   {
@@ -63,12 +64,12 @@ const userSchema = new Schema(
   },
 );
 
-userSchema.pre("save", async function (next) {
+// pre hook
+userSchema.pre("save", async function () {
   // not using arrow function because we want the context "this"
-  if (!this.isModified("password")) return next();
+  if (!this.isModified("password")) return;
 
   this.password = await bcrypt.hash(this.password, 10);
-  next();
 });
 
 // adding the property "isPasswordCorrect" in the object
@@ -103,13 +104,13 @@ userSchema.methods.generateRefreshToken = function () {
 
 // general token
 userSchema.methods.generateTemporaryToken = function () {
-  const unHashedToken = crypto.randomlyBytes(20).toString("hex");
+  const unHashedToken = crypto.randomBytes(20).toString("hex");
   const hashedToken = crypto
     .createHash("sha256")
     .update(unHashedToken)
     .digest("hex");
-  const tokenExpiry = Date.now() + (20*60*1000) // 20 min
-  return (unHashedToken, hashedToken, tokenExpiry)
+  const tokenExpiry = Date.now() + 20 * 60 * 1000; // 20 min
+  return {unHashedToken, hashedToken, tokenExpiry};
 };
 
 export const User = mongoose.model("User", userSchema);

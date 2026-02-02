@@ -2,7 +2,7 @@ import { User } from "../models/user.models.js";
 import { ApiResponse } from "../utils/api-response.js";
 import { ApiError } from "../utils/api-error.js";
 import { asyncHandler } from "../utils/async-handler.js";
-import { sendEmail } from "../utils/mail.js";
+import { emailVerificationMailgenContent, sendEmail } from "../utils/mail.js";
 
 const generateAccessAndRefreshToken = async (userId) => {
   try {
@@ -59,7 +59,7 @@ const registerUser = asyncHandler(async (req, res) => {
   });
 
   // write those fields which is nonessential to be send to user
-  await User.findById(user._id).select(
+  const createdUser = await User.findById(user._id).select(
     "-password -refreshToken -emailVerificationToken -emailVerificationExpiry",
   );
 
@@ -73,7 +73,7 @@ const registerUser = asyncHandler(async (req, res) => {
       new ApiResponse(
         200,
         { user: createdUser },
-        "User registeredsuccessfully and verification email has been on your email",
+        "User registered successfully and verification email has been on your email",
       ),
     );
 });

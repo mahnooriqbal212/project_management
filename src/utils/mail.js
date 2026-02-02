@@ -6,15 +6,15 @@ const sendEmail = async (options) => {
     theme: "default",
     product: {
       name: "Task Manager",
-      link: "https://taskmanagelink.com",
+      link: "https://taskmanagelink.com"
     },
   });
   const emailTextual = mailGenerator.generatePlaintext(options.mailgenContent);
   const emailHtml = mailGenerator.generate(options.mailgenContent);
 
   const transporter = nodemailer.createTransport({
-    host: process.env.MAILTRAP_SMPT_HOST,
-    port: process.env.MAIKTRAP_SMTP_PORT,
+    host: process.env.MAILTRAP_SMTP_HOST,
+    port: process.env.MAILTRAP_SMTP_PORT,
     auth: {
       user: process.env.MAILTRAP_SMTP_USER,
       pass: process.env.MAILTRAP_SMTP_PASS,
@@ -44,13 +44,13 @@ const emailVerificationMailgenContent = (username, verficationUrl) => {
     body: {
       name: username,
       intro: "Welcome to our App! we're excited to have you onboard.",
-      actions: {
+      action: {
         instructions:
           "To verify you email, please click on the following button.",
         button: {
           color: "#22bc66",
           text: "Verify your email",
-          link: verficationUrl,
+          link: verficationUrl
         },
       },
       outro:
@@ -64,7 +64,7 @@ const forgotPasswordMailgenContent = (username, passwordResetUrl) => {
     body: {
       name: username,
       intro: "We got a request to reset the password of your account.",
-      actions: {
+      action: {
         instructions:
           "To reset your password, click on the following button or link.",
         button: {
@@ -79,4 +79,4 @@ const forgotPasswordMailgenContent = (username, passwordResetUrl) => {
   };
 };
 
-export { sendEmail };
+export { emailVerificationMailgenContent, forgotPasswordMailgenContent, sendEmail };
