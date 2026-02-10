@@ -158,7 +158,7 @@ const getCurentUser = asyncHandler(async (req, res) => {
 });
 
 const verifyEmail = asyncHandler(async (req, res) => {
-  const { verificationToken } = req.params;
+  const { verificationToken } = req.params; // verificationToken comes from the email-verify route
 
   if (!verificationToken) {
     throw new ApiError(400, "Email verification token is missing");
