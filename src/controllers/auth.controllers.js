@@ -8,6 +8,7 @@ import {
   sendEmail,
 } from "../utils/mail.js";
 import jwt from "jsonwebtoken";
+import crypto from "crypto";
 
 const generateAccessAndRefreshToken = async (userId) => {
   try {
@@ -254,7 +255,7 @@ const refreshAccessToken = asyncHandler(async (req, res) => {
     return res
       .status(200)
       .cookie("accessToken", accessToken, options)
-      .cookie("refreshToken", refreshToken, options)
+      .cookie("refreshToken", newRefreshToken, options)
       .json(
         new ApiResponse(
           200,
@@ -359,5 +360,5 @@ export {
   refreshAccessToken,
   forgotPasswordRequest,
   resetForgotPassword,
-  changeCurrentPassword
+  changeCurrentPassword,
 };
