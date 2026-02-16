@@ -28,7 +28,7 @@ router.use(verifyJWT); // after this line of all routes will include verifyJWT
 router
   .route("/")
   .get(getProjects)
-  .post(createProjectValidator, validate, createProject);
+  .post(createProjectValidator(), validate, createProject);
 
 router
   .route("/:projectId")
