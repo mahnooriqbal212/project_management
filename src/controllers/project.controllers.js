@@ -15,9 +15,9 @@ const getProject = asyncHandler(async (req, res) => {
     },
     {
       $lookup: {
-        from: "projects",
-        localfield: "projects",
-        foreignField: "_id",
+        from: "projects", //projects document
+        localfield: "project", //from "projectmembers document"
+        foreignField: "_id", // from projects document
         as: "projects",
         pipeline: [
           {
@@ -31,7 +31,7 @@ const getProject = asyncHandler(async (req, res) => {
           {
             $addFields: {
               members: {
-                $size: $projectmembers,
+                $size: "$projectmembers",
               },
             },
           },
@@ -74,7 +74,7 @@ const getProjectById = asyncHandler(async (req, res) => {
 const createProject = asyncHandler(async (req, res) => {
   const { name, description } = req.body;
 
-  await Project.create({
+  const project = await Project.create({
     name,
     description,
     createdBy: new mongoose.Types.ObjectId(req.user._id),
