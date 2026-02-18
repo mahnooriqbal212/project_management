@@ -5,7 +5,7 @@ import { ApiResponse } from "../utils/api-response.js";
 import { ApiError } from "../utils/api-error.js";
 import { asyncHandler } from "../utils/async-handler.js";
 import { UserRolesEnum, AvailableUserRole } from "../utils/constants.js";
-import mongoose, { Types } from "mongoose";
+import mongoose from "mongoose";
 
 const getProjects = asyncHandler(async (req, res) => {
   const projects = await ProjectMember.aggregate([
@@ -74,7 +74,6 @@ const getProjectById = asyncHandler(async (req, res) => {
   return res
     .status(200)
     .json(new ApiResponse(200, project, "Project fetched successfully"));
-
 });
 
 const createProject = asyncHandler(async (req, res) => {
@@ -139,7 +138,13 @@ const deleteProject = asyncHandler(async (req, res) => {
 
   return res
     .status(200)
-    .json(new ApiResponse(200, project, "Project and its members deleted successfully"));
+    .json(
+      new ApiResponse(
+        200,
+        project,
+        "Project and its members deleted successfully",
+      ),
+    );
 });
 
 const addMembersToProject = asyncHandler(async (req, res) => {
