@@ -3,6 +3,7 @@ import { ProjectMember } from "../models/projectmember.models.js";
 import { ApiError } from "../utils/api-error.js";
 import { asyncHandler } from "../utils/async-handler.js";
 import jwt from "jsonwebtoken";
+import mongoose from "mongoose";
 
 export const verifyJWT = asyncHandler(async (req, res, next) => {
   const token =
@@ -49,5 +50,7 @@ export const validateProjectPermission = (roles = []) => {
     if(!roles.includes(givenRole)) {
       throw new ApiError(403, "You donot have permission to perform this action");
     }
+
+    next()
   })
 }
